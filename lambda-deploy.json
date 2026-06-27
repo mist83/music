@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "mullmania-lambda-deploy-v1",
+  "target": {
+    "functionName": "music-mullmania-api",
+    "region": "us-west-2",
+    "runtime": "dotnet8",
+    "handler": "Music.Api",
+    "architecture": "x86_64",
+    "memorySize": 1024,
+    "timeout": 30,
+    "role": {
+      "managed": {
+        "roleName": "music-mullmania-api-role"
+      }
+    },
+    "environment": {
+      "ASPNETCORE_ENVIRONMENT": "Production"
+    },
+    "functionUrl": {
+      "enabled": true,
+      "authType": "NONE",
+      "cors": {
+        "AllowOrigins": ["*"],
+        "AllowMethods": ["GET"],
+        "AllowHeaders": ["*"],
+        "MaxAge": 300
+      }
+    }
+  },
+  "package": {
+    "root": "Music.Api/publish",
+    "include": ["**/*"],
+    "exclude": [".git/**"]
+  },
+  "verification": {
+    "enabled": true,
+    "path": "/stats",
+    "method": "GET",
+    "expectedStatus": 200
+  }
+}

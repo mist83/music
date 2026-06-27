@@ -1,0 +1,526 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Music.Api/1.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.AspNetCoreServer.Hosting": "2.1.0",
+          "DataTools.Core": "1.0.1",
+          "DataTools.DataCore": "1.0.1",
+          "DataTools.Json": "1.0.1",
+          "DataTools.Packs": "1.0.1",
+          "Swashbuckle.AspNetCore": "6.6.2"
+        },
+        "runtime": {
+          "Music.Api.dll": {}
+        }
+      },
+      "Amazon.Lambda.APIGatewayEvents/3.0.0": {
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.APIGatewayEvents.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.ApplicationLoadBalancerEvents/3.0.0": {
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.ApplicationLoadBalancerEvents.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.AspNetCoreServer/10.1.1": {
+        "dependencies": {
+          "Amazon.Lambda.APIGatewayEvents": "3.0.0",
+          "Amazon.Lambda.ApplicationLoadBalancerEvents": "3.0.0",
+          "Amazon.Lambda.Core": "3.1.0",
+          "Amazon.Lambda.Logging.AspNetCore": "5.0.0",
+          "Amazon.Lambda.Serialization.SystemTextJson": "3.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.AspNetCoreServer.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.4.0"
+          }
+        }
+      },
+      "Amazon.Lambda.AspNetCoreServer.Hosting/2.1.0": {
+        "dependencies": {
+          "Amazon.Lambda.APIGatewayEvents": "3.0.0",
+          "Amazon.Lambda.AspNetCoreServer": "10.1.1",
+          "Amazon.Lambda.Core": "3.1.0",
+          "Amazon.Lambda.RuntimeSupport": "2.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.AspNetCoreServer.Hosting.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.Core/3.1.0": {
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.Logging.AspNetCore/5.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "3.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.Logging.AspNetCore.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.RuntimeSupport/2.1.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "3.1.0",
+          "SnapshotRestore.Registry": "1.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.RuntimeSupport.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        }
+      },
+      "Amazon.Lambda.Serialization.SystemTextJson/3.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "3.1.0"
+        },
+        "runtime": {
+          "lib/net8.0/Amazon.Lambda.Serialization.SystemTextJson.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "DataTools.Core/1.0.1": {
+        "runtime": {
+          "lib/net8.0/DataTools.Core.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "DataTools.DataCore/1.0.1": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/DataTools.DataCore.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "DataTools.Json/1.0.1": {
+        "runtime": {
+          "lib/net8.0/DataTools.Json.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "DataTools.Packs/1.0.1": {
+        "runtime": {
+          "lib/net8.0/DataTools.Packs.dll": {
+            "assemblyVersion": "1.0.1.0",
+            "fileVersion": "1.0.1.0"
+          }
+        }
+      },
+      "Microsoft.Data.Sqlite/8.0.0": {
+        "dependencies": {
+          "Microsoft.Data.Sqlite.Core": "8.0.0",
+          "SQLitePCLRaw.bundle_e_sqlite3": "2.1.6"
+        }
+      },
+      "Microsoft.Data.Sqlite.Core/8.0.0": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.1.6"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Data.Sqlite.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.OpenApi/1.6.14": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "assemblyVersion": "1.6.14.0",
+            "fileVersion": "1.6.14.0"
+          }
+        }
+      },
+      "SnapshotRestore.Registry/1.0.2": {
+        "runtime": {
+          "lib/net8.0/SnapshotRestore.Registry.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
+          }
+        }
+      },
+      "SQLitePCLRaw.bundle_e_sqlite3/2.1.6": {
+        "dependencies": {
+          "SQLitePCLRaw.lib.e_sqlite3": "2.1.6",
+          "SQLitePCLRaw.provider.e_sqlite3": "2.1.6"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SQLitePCLRaw.batteries_v2.dll": {
+            "assemblyVersion": "2.1.6.2060",
+            "fileVersion": "2.1.6.2060"
+          }
+        }
+      },
+      "SQLitePCLRaw.core/2.1.6": {
+        "runtime": {
+          "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
+            "assemblyVersion": "2.1.6.2060",
+            "fileVersion": "2.1.6.2060"
+          }
+        }
+      },
+      "SQLitePCLRaw.lib.e_sqlite3/2.1.6": {
+        "runtimeTargets": {
+          "runtimes/browser-wasm/nativeassets/net8.0/e_sqlite3.a": {
+            "rid": "browser-wasm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm/native/libe_sqlite3.so": {
+            "rid": "linux-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libe_sqlite3.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-armel/native/libe_sqlite3.so": {
+            "rid": "linux-armel",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-mips64/native/libe_sqlite3.so": {
+            "rid": "linux-mips64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-musl-arm/native/libe_sqlite3.so": {
+            "rid": "linux-musl-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-musl-arm64/native/libe_sqlite3.so": {
+            "rid": "linux-musl-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-musl-x64/native/libe_sqlite3.so": {
+            "rid": "linux-musl-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-ppc64le/native/libe_sqlite3.so": {
+            "rid": "linux-ppc64le",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-s390x/native/libe_sqlite3.so": {
+            "rid": "linux-s390x",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libe_sqlite3.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x86/native/libe_sqlite3.so": {
+            "rid": "linux-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib": {
+            "rid": "maccatalyst-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/maccatalyst-x64/native/libe_sqlite3.dylib": {
+            "rid": "maccatalyst-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-arm64/native/libe_sqlite3.dylib": {
+            "rid": "osx-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/libe_sqlite3.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm/native/e_sqlite3.dll": {
+            "rid": "win-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/e_sqlite3.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/e_sqlite3.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/e_sqlite3.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "SQLitePCLRaw.provider.e_sqlite3/2.1.6": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.1.6"
+        },
+        "runtime": {
+          "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {
+            "assemblyVersion": "2.1.6.2060",
+            "fileVersion": "2.1.6.2060"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore/6.6.2": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.6.2",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.6.2",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.6.2"
+        }
+      },
+      "Swashbuckle.AspNetCore.Swagger/6.6.2": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.6.14"
+        },
+        "runtime": {
+          "lib/net8.0/Swashbuckle.AspNetCore.Swagger.dll": {
+            "assemblyVersion": "6.6.2.0",
+            "fileVersion": "6.6.2.401"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerGen/6.6.2": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.6.2"
+        },
+        "runtime": {
+          "lib/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
+            "assemblyVersion": "6.6.2.0",
+            "fileVersion": "6.6.2.401"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerUI/6.6.2": {
+        "runtime": {
+          "lib/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
+            "assemblyVersion": "6.6.2.0",
+            "fileVersion": "6.6.2.401"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Music.Api/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Amazon.Lambda.APIGatewayEvents/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1JxlUCqIps7p9FLRfFrgaLCVqgg2J39ZOmZDmV/R1LMwb2eT4/glaKwhxC3r01HeDsozk1jUe1KYRGgzxJaVXg==",
+      "path": "amazon.lambda.apigatewayevents/3.0.0",
+      "hashPath": "amazon.lambda.apigatewayevents.3.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.ApplicationLoadBalancerEvents/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lUiZhNxherASNgbZysdFEj37VlyO7BH2z4iOwFpRtfLGq/v/dkVqt3rBAVvrxfPBRGi6SbSb/bHTV4bhPo5tSg==",
+      "path": "amazon.lambda.applicationloadbalancerevents/3.0.0",
+      "hashPath": "amazon.lambda.applicationloadbalancerevents.3.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.AspNetCoreServer/10.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xCcqrIhN9rVHF7A5MaPNu+mUuUDJX/ywE7joz6Adz/cr0jsX2Vk5PsxWyqFz/pGT42rINYmXJ9LwS/PCE5OSIQ==",
+      "path": "amazon.lambda.aspnetcoreserver/10.1.1",
+      "hashPath": "amazon.lambda.aspnetcoreserver.10.1.1.nupkg.sha512"
+    },
+    "Amazon.Lambda.AspNetCoreServer.Hosting/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zYy6Dzs74OAZywP+y4Lx60aWYVPyNooAKWx3sqGpZ4jTnLevKlWKvsYBGGKgLQs62F8ppRQc8mvZoKGeN3eZEA==",
+      "path": "amazon.lambda.aspnetcoreserver.hosting/2.1.0",
+      "hashPath": "amazon.lambda.aspnetcoreserver.hosting.2.1.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Core/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uZZ2k5lMoB9OzPTmKkkEKpyFcnLxcb7FxtxrA3+HBg/sooTzu402iCcSk5r+N62Qokhwr4Q9cbaVJSM6Dln3aA==",
+      "path": "amazon.lambda.core/3.1.0",
+      "hashPath": "amazon.lambda.core.3.1.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Logging.AspNetCore/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vfqHBHPvsIvaAGeBnFSRSCThHoqXWqy7S/R6/Aldn4/FmHEp872D0WcJgFac/D0h0GnbHqyfFkjmBEpi85vOog==",
+      "path": "amazon.lambda.logging.aspnetcore/5.0.0",
+      "hashPath": "amazon.lambda.logging.aspnetcore.5.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.RuntimeSupport/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eu/0mFfSlI3Bi9v2ze1EDE2HU9GsaQ08gDcDeYrTMm8MJBkCbUOXiJeWrh6rVyZquUK3dniEDQM7pvBSOakmoQ==",
+      "path": "amazon.lambda.runtimesupport/2.1.0",
+      "hashPath": "amazon.lambda.runtimesupport.2.1.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Serialization.SystemTextJson/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8lKS2w8Ww+Kq41mRmedL3lYLVr+UE0tzN2FwOigxKe+hzDbWJIMXZwVHwf53RsdFsYZlaTmW4WHE56W/1Fk3Hg==",
+      "path": "amazon.lambda.serialization.systemtextjson/3.0.0",
+      "hashPath": "amazon.lambda.serialization.systemtextjson.3.0.0.nupkg.sha512"
+    },
+    "DataTools.Core/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jUfjZPpyK7ABuGnlJS9Vd7NjamIK5+nKKpyuHLy6QfT/rblGTH2dUNl3GJOOIPCK4lyks3YzSvy3IEMolH4SxQ==",
+      "path": "datatools.core/1.0.1",
+      "hashPath": "datatools.core.1.0.1.nupkg.sha512"
+    },
+    "DataTools.DataCore/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gwvdsC5AUV8dqyel6VFd4BVXOltGqxTB9cQsAXUNjpPxZ5iYp3WnquPzrh1uVyS8hr857YvAnFbJyeEfGVGmrw==",
+      "path": "datatools.datacore/1.0.1",
+      "hashPath": "datatools.datacore.1.0.1.nupkg.sha512"
+    },
+    "DataTools.Json/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZA/JcC4cVoiRXlmXhPQHhbnz6P3CWh7kK+5Wrrtwv+YwcGX1j3QEeQxHhggUlRpDmeHvDlG956sGRJs0QcFTSQ==",
+      "path": "datatools.json/1.0.1",
+      "hashPath": "datatools.json.1.0.1.nupkg.sha512"
+    },
+    "DataTools.Packs/1.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ygpQeHUXe4Fpd+MnXk6A5YnhOIKxAu9qflmPhS87d8i4ZIRAOO0hewA5IaKxFd3It20C33J+TqRjPyJNmfj79Q==",
+      "path": "datatools.packs/1.0.1",
+      "hashPath": "datatools.packs.1.0.1.nupkg.sha512"
+    },
+    "Microsoft.Data.Sqlite/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-H+iC5IvkCCKSNHXzL3JARvDn7VpkvuJM91KVB89sKjeTF/KX/BocNNh93ZJtX5MCQKb/z4yVKgkU2sVIq+xKfg==",
+      "path": "microsoft.data.sqlite/8.0.0",
+      "hashPath": "microsoft.data.sqlite.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Data.Sqlite.Core/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pujbzfszX7jAl7oTbHhqx7pxd9jibeyHHl8zy1gd55XMaKWjDtc5XhhNYwQnrwWYCInNdVoArbaaAvLgW7TwuA==",
+      "path": "microsoft.data.sqlite.core/8.0.0",
+      "hashPath": "microsoft.data.sqlite.core.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.OpenApi/1.6.14": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tTaBT8qjk3xINfESyOPE2rIellPvB7qpVqiWiyA/lACVvz+xOGiXhFUfohcx82NLbi5avzLW0lx+s6oAqQijfw==",
+      "path": "microsoft.openapi/1.6.14",
+      "hashPath": "microsoft.openapi.1.6.14.nupkg.sha512"
+    },
+    "SnapshotRestore.Registry/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-clcAZGAb8sbtIuynOPiZkpHLdSb3RGxHJjSPyecgRh55fFY0KynqA7GEtrVL/sAUgO9jvC0IMhPXBRcJuFWrAA==",
+      "path": "snapshotrestore.registry/1.0.2",
+      "hashPath": "snapshotrestore.registry.1.0.2.nupkg.sha512"
+    },
+    "SQLitePCLRaw.bundle_e_sqlite3/2.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BmAf6XWt4TqtowmiWe4/5rRot6GerAeklmOPfviOvwLoF5WwgxcJHAxZtySuyW9r9w+HLILnm8VfJFLCUJYW8A==",
+      "path": "sqlitepclraw.bundle_e_sqlite3/2.1.6",
+      "hashPath": "sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.core/2.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wO6v9GeMx9CUngAet8hbO7xdm+M42p1XeJq47ogyRoYSvNSp0NGLI+MgC0bhrMk9C17MTVFlLiN6ylyExLCc5w==",
+      "path": "sqlitepclraw.core/2.1.6",
+      "hashPath": "sqlitepclraw.core.2.1.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.lib.e_sqlite3/2.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2ObJJLkIUIxRpOUlZNGuD4rICpBnrBR5anjyfUFQep4hMOIeqW+XGQYzrNmHSVz5xSWZ3klSbh7sFR6UyDj68Q==",
+      "path": "sqlitepclraw.lib.e_sqlite3/2.1.6",
+      "hashPath": "sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512"
+    },
+    "SQLitePCLRaw.provider.e_sqlite3/2.1.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PQ2Oq3yepLY4P7ll145P3xtx2bX8xF4PzaKPRpw9jZlKvfe4LE/saAV82inND9usn1XRpmxXk7Lal3MTI+6CNg==",
+      "path": "sqlitepclraw.provider.e_sqlite3/2.1.6",
+      "hashPath": "sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore/6.6.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+NB4UYVYN6AhDSjW0IJAd1AGD8V33gemFNLPaxKTtPkHB+HaKAKf9MGAEUPivEWvqeQfcKIw8lJaHq6LHljRuw==",
+      "path": "swashbuckle.aspnetcore/6.6.2",
+      "hashPath": "swashbuckle.aspnetcore.6.6.2.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.Swagger/6.6.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ovgPTSYX83UrQUWiS5vzDcJ8TEX1MAxBgDFMK45rC24MorHEPQlZAHlaXj/yth4Zf6xcktpUgTEBvffRQVwDKA==",
+      "path": "swashbuckle.aspnetcore.swagger/6.6.2",
+      "hashPath": "swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerGen/6.6.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zv4ikn4AT1VYuOsDCpktLq4QDq08e7Utzbir86M5/ZkRaLXbCPF11E1/vTmOiDzRTl0zTZINQU2qLKwTcHgfrA==",
+      "path": "swashbuckle.aspnetcore.swaggergen/6.6.2",
+      "hashPath": "swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerUI/6.6.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mBBb+/8Hm2Q3Wygag+hu2jj69tZW5psuv0vMRXY07Wy+Rrj40vRP8ZTbKBhs91r45/HXT4aY4z0iSBYx1h6JvA==",
+      "path": "swashbuckle.aspnetcore.swaggerui/6.6.2",
+      "hashPath": "swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+    }
+  }
+}

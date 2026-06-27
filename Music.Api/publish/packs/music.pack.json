@@ -1,0 +1,95 @@
+{
+  "id": "music",
+  "label": "Music",
+  "collections": [
+    {
+      "path": "genres",
+      "label": "genres",
+      "columns": [
+        { "key": "id",    "required": true, "fieldType": "Text", "aliases": ["id", "genreId"] },
+        { "key": "label", "required": true, "fieldType": "Text", "aliases": ["label", "name"] }
+      ],
+      "rules": [
+        { "id": "music.genres.required", "kind": "requiredFields", "severity": "Error", "fields": ["id", "label"] }
+      ]
+    },
+    {
+      "path": "labels",
+      "label": "labels",
+      "columns": [
+        { "key": "id",            "required": true,  "fieldType": "Text", "aliases": ["id", "labelId"] },
+        { "key": "name",          "required": true,  "fieldType": "Text", "aliases": ["name", "title"] },
+        { "key": "type",          "required": false, "fieldType": "Text", "aliases": ["type"] },
+        { "key": "country",       "required": false, "fieldType": "Text", "aliases": ["country"] },
+        { "key": "parentLabelId", "required": false, "fieldType": "Text", "aliases": ["parentLabelId", "parent"] }
+      ],
+      "rules": [
+        { "id": "music.labels.required", "kind": "requiredFields", "severity": "Error", "fields": ["id", "name"] }
+      ]
+    },
+    {
+      "path": "artists",
+      "label": "artists",
+      "columns": [
+        { "key": "id",       "required": true,  "fieldType": "Text", "aliases": ["id", "artistId"] },
+        { "key": "name",     "required": true,  "fieldType": "Text", "aliases": ["name", "title"] },
+        { "key": "sortName", "required": false, "fieldType": "Text", "aliases": ["sortName", "sort"] },
+        { "key": "type",     "required": false, "fieldType": "Text", "aliases": ["type"] },
+        { "key": "country",  "required": false, "fieldType": "Text", "aliases": ["country"] }
+      ],
+      "rules": [
+        { "id": "music.artists.required",     "kind": "requiredFields", "severity": "Error",   "fields": ["id", "name"] },
+        { "id": "music.artists.type_allowed", "kind": "allowedValues",  "severity": "Warning", "field": "type",
+          "allowedValues": ["Person", "Group", "Orchestra", "Choir", "Character", "Other"] }
+      ]
+    },
+    {
+      "path": "works",
+      "label": "works",
+      "columns": [
+        { "key": "id",       "required": true,  "fieldType": "Text", "aliases": ["id", "workId"] },
+        { "key": "title",    "required": true,  "fieldType": "Text", "aliases": ["title", "name"] },
+        { "key": "type",     "required": false, "fieldType": "Text", "aliases": ["type"] },
+        { "key": "language", "required": false, "fieldType": "Text", "aliases": ["language", "lang"] }
+      ],
+      "rules": [
+        { "id": "music.works.required", "kind": "requiredFields", "severity": "Error", "fields": ["id", "title"] }
+      ]
+    },
+    {
+      "path": "releases",
+      "label": "releases",
+      "columns": [
+        { "key": "id",               "required": true,  "fieldType": "Text", "aliases": ["id", "releaseId", "releaseGroupId"] },
+        { "key": "title",            "required": true,  "fieldType": "Text", "aliases": ["title", "name"] },
+        { "key": "primaryArtistId",  "required": true,  "fieldType": "Text", "aliases": ["primaryArtistId", "artistId"] },
+        { "key": "type",             "required": false, "fieldType": "Text", "aliases": ["type", "primaryType"] },
+        { "key": "firstReleaseDate", "required": false, "fieldType": "Text", "aliases": ["firstReleaseDate", "date"] }
+      ],
+      "rules": [
+        { "id": "music.releases.required",     "kind": "requiredFields", "severity": "Error", "fields": ["id", "title", "primaryArtistId"] },
+        { "id": "music.releases.artist_ref",   "kind": "reference",      "severity": "Error", "field": "primaryArtistId", "targetCollection": "artists", "targetField": "id" },
+        { "id": "music.releases.type_allowed", "kind": "allowedValues",  "severity": "Info",  "field": "type",
+          "allowedValues": ["Album", "EP", "Single", "Compilation", "Live", "Soundtrack", "Broadcast", "Other"] }
+      ]
+    },
+    {
+      "path": "tracks",
+      "label": "tracks",
+      "columns": [
+        { "key": "id",              "required": true,  "fieldType": "Text",    "aliases": ["id", "trackId", "recordingId"] },
+        { "key": "title",           "required": true,  "fieldType": "Text",    "aliases": ["title", "name"] },
+        { "key": "releaseId",       "required": true,  "fieldType": "Text",    "aliases": ["releaseId"] },
+        { "key": "primaryArtistId", "required": false, "fieldType": "Text",    "aliases": ["primaryArtistId", "artistId"] },
+        { "key": "workId",          "required": false, "fieldType": "Text",    "aliases": ["workId"] },
+        { "key": "position",        "required": false, "fieldType": "Decimal", "aliases": ["position", "number", "trackNumber"] },
+        { "key": "lengthMs",        "required": false, "fieldType": "Decimal", "aliases": ["lengthMs", "length", "duration"] }
+      ],
+      "rules": [
+        { "id": "music.tracks.required",       "kind": "requiredFields", "severity": "Error", "fields": ["id", "title", "releaseId"] },
+        { "id": "music.tracks.release_ref",    "kind": "reference",      "severity": "Error", "field": "releaseId", "targetCollection": "releases", "targetField": "id" },
+        { "id": "music.tracks.length_numeric", "kind": "numeric",        "severity": "Info",  "field": "lengthMs" }
+      ]
+    }
+  ]
+}
