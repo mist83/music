@@ -1,0 +1,9 @@
+# Raw upstream response cache — large, regenerable, not the deliverable.
+cache/
+build.log
+node_modules/
+
+# Full-scale spine artifacts (the 100k FMA build) are too big for git.
+data/music-master.full.json
+data/fma_metadata.zip
+fma/
