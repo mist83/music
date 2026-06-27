@@ -149,7 +149,7 @@ function upsertArtist(mb, role) {
       id,
       name: mb.name || mb['sort-name'] || 'Unknown',
       sortName: mb['sort-name'] || null,
-      type: mb.type || null,
+      type: mb.type || undefined,
       country: mb.country || mb.area?.['iso-3166-1-codes']?.[0] || null,
       lifeSpan: mb['life-span'] || null,
       roles: [],
@@ -478,7 +478,7 @@ function parseFmaGenres(s) {
   return out;
 }
 function fmaArtist(id, name) {
-  return { id, name: name || 'Unknown', sortName: null, type: null, country: null, lifeSpan: null,
+  return { id, name: name || 'Unknown', sortName: null, type: undefined, country: null, lifeSpan: null,
     roles: ['performer'], genreIds: [], bio: null, image: null, memberIds: [], memberOfIds: [],
     releaseIds: [], externalIds: [{ type: 'fma-artist', id: id.slice('artist:fma-'.length) }] };
 }
