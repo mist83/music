@@ -31,6 +31,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const CACHE_DIR = join(ROOT, 'cache');
@@ -413,17 +414,140 @@ function verifyMaster(master) {
   return broken;
 }
 
+// ----- FMA spine: Free Music Archive frozen dump (CC BY 4.0 metadata) ---------
+const FMA_EX = join(ROOT, 'fma', 'ex');
+const FMA_DIR = join(FMA_EX, 'fma_metadata');
+const FMA_ZIP = join(ROOT, 'fma', 'fma_metadata.zip');
+
+// The FMA zip is bzip2-compressed (zip method 12); Node has no bzip2, so extract via python.
+function ensureFmaExtracted() {
+  if (existsSync(join(FMA_DIR, 'raw_tracks.csv'))) return;
+  if (!existsSync(FMA_ZIP)) {
+    console.error('[fma] downloading pinned dump...', FMA_DUMP.url);
+    execFileSync('curl', ['-sL', '-o', FMA_ZIP, FMA_DUMP.url], { stdio: 'inherit' });
+  }
+  console.error('[fma] extracting CSVs via python zipfile (bzip2)...');
+  execFileSync('python3', ['-c',
+    'import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);' +
+    "[z.extract('fma_metadata/'+n,sys.argv[2]) for n in ['genres.csv','raw_artists.csv','raw_albums.csv','raw_tracks.csv']]",
+    FMA_ZIP, FMA_EX], { stdio: 'inherit' });
+}
+
+// Streaming, quote-aware CSV reader (handles commas + newlines inside quoted fields).
+function streamCsv(path, onRow) {
+  const text = readFileSync(path, 'utf8');
+  let header = null, row = [], field = '', q = false;
+  const endField = () => { row.push(field); field = ''; };
+  const endRow = () => {
+    endField();
+    if (header === null) header = row;
+    else if (row.length > 1 || row[0] !== '') {
+      const o = {};
+      for (let c = 0; c < header.length; c++) o[header[c]] = row[c] ?? '';
+      onRow(o);
+    }
+    row = [];
+  };
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) {
+      if (ch === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else q = false; }
+      else field += ch;
+    } else if (ch === '"') q = true;
+    else if (ch === ',') endField();
+    else if (ch === '\n') endRow();
+    else if (ch !== '\r') field += ch;
+  }
+  if (field !== '' || row.length) endRow();
+}
+
+const stripHtml = (s) => String(s || '').replace(/<[^>]*>/g, ' ').replace(/&[a-z#0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+function parseFmaDate(s) {
+  const m = String(s || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  return m ? `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}` : null;
+}
+function parseDuration(s) {
+  const p = String(s || '').split(':').map(Number);
+  if (p.length < 2 || p.some(Number.isNaN)) return null;
+  const sec = p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1];
+  return sec > 0 ? sec * 1000 : null;
+}
+function parseFmaGenres(s) {
+  const out = []; const re = /'genre_id':\s*'(\d+)'/g; let m;
+  while ((m = re.exec(String(s || '')))) out.push(m[1]);
+  return out;
+}
+function fmaArtist(id, name) {
+  return { id, name: name || 'Unknown', sortName: null, type: null, country: null, lifeSpan: null,
+    roles: ['performer'], genreIds: [], bio: null, image: null, memberIds: [], memberOfIds: [],
+    releaseIds: [], externalIds: [{ type: 'fma-artist', id: id.slice('artist:fma-'.length) }] };
+}
+
+function parseFmaInto() {
+  ensureFmaExtracted();
+  console.error('[fma] genres...');
+  streamCsv(join(FMA_DIR, 'genres.csv'), (r) => {
+    if (r.genre_id && r.title) { const id = `genre:fma-${r.genre_id}`; if (!G.genres.has(id)) G.genres.set(id, { id, label: r.title }); }
+  });
+  console.error('[fma] artists...');
+  streamCsv(join(FMA_DIR, 'raw_artists.csv'), (r) => {
+    if (!r.artist_id) return;
+    const id = `artist:fma-${r.artist_id}`;
+    const a = fmaArtist(id, r.artist_name);
+    const bio = stripHtml(r.artist_bio);
+    if (bio) a.bio = { text: bio.slice(0, 600), source: 'freemusicarchive', url: 'https://freemusicarchive.org', license: 'CC (per artist)', attribution: 'Artist bio via Free Music Archive.' };
+    if (/^https?:\/\//.test(r.artist_image_file || '')) a.image = { url: r.artist_image_file, source: 'freemusicarchive', license: 'CC (per artist)', rights: 'Free Music Archive artist image; CC license varies.' };
+    G.artists.set(id, a);
+  });
+  console.error('[fma] albums...');
+  streamCsv(join(FMA_DIR, 'raw_albums.csv'), (r) => {
+    if (!r.album_id) return;
+    const id = `release:fma-${r.album_id}`;
+    G.releases.set(id, { id, title: r.album_title || 'Untitled', primaryArtistId: null, artistCredits: [],
+      type: 'Album', firstReleaseDate: parseFmaDate(r.album_date_released), genreIds: [], labelIds: [], trackIds: [],
+      coverImage: /^https?:\/\//.test(r.album_image_file || '') ? { url: r.album_image_file, source: 'freemusicarchive', rights: 'Free Music Archive album image; CC license varies.' } : null,
+      externalIds: [{ type: 'fma-album', id: r.album_id }] });
+  });
+  console.error('[fma] tracks (streaming)...');
+  let n = 0;
+  streamCsv(join(FMA_DIR, 'raw_tracks.csv'), (r) => {
+    if (!r.track_id || !r.album_id) return; // releaseId is required by the schema
+    const id = `track:fma-${r.track_id}`;
+    const releaseId = `release:fma-${r.album_id}`;
+    const artistId = r.artist_id ? `artist:fma-${r.artist_id}` : null;
+    if (artistId && !G.artists.has(artistId)) G.artists.set(artistId, fmaArtist(artistId, r.artist_name));
+    let rel = G.releases.get(releaseId);
+    if (!rel) { rel = { id: releaseId, title: r.album_title || 'Untitled', primaryArtistId: null, artistCredits: [], type: 'Album', firstReleaseDate: null, genreIds: [], labelIds: [], trackIds: [], coverImage: null, externalIds: [{ type: 'fma-album', id: r.album_id }] }; G.releases.set(releaseId, rel); }
+    G.tracks.set(id, { id, title: r.track_title || 'Untitled', releaseId, position: Number(r.track_number) || null, lengthMs: parseDuration(r.track_duration), primaryArtistId: artistId, workId: null, credits: [], externalIds: [] });
+    if (!rel.primaryArtistId && artistId) rel.primaryArtistId = artistId;
+    rel.trackIds.push(id);
+    const a = artistId ? G.artists.get(artistId) : null;
+    for (const g of parseFmaGenres(r.track_genres)) {
+      const gid = `genre:fma-${g}`;
+      if (!G.genres.has(gid)) continue;
+      if (!rel.genreIds.includes(gid)) rel.genreIds.push(gid);
+      if (a && !a.genreIds.includes(gid)) a.genreIds.push(gid);
+    }
+    if (a && !a.releaseIds.includes(releaseId)) a.releaseIds.push(releaseId);
+    if (++n % 25000 === 0) console.error(`[fma]   ${n} tracks...`);
+  });
+  console.error(`[fma] parsed ${n} tracks`);
+}
+
+// Drop records that would break referential integrity (release needs an artist; track needs a release).
+function pruneIntegrity() {
+  for (const [id, r] of [...G.releases]) if (!r.primaryArtistId || !G.artists.has(r.primaryArtistId)) G.releases.delete(id);
+  for (const [id, t] of [...G.tracks]) {
+    if (!t.releaseId || !G.releases.has(t.releaseId)) { G.tracks.delete(id); continue; }
+    if (t.primaryArtistId && !G.artists.has(t.primaryArtistId)) t.primaryArtistId = null;
+    if (t.workId && !G.works.has(t.workId)) t.workId = null;
+  }
+  for (const [, r] of G.releases) r.trackIds = r.trackIds.filter((tid) => G.tracks.has(tid));
+}
+
 async function main() {
   mkdirSync(CACHE_DIR, { recursive: true });
   mkdirSync(DATA_DIR, { recursive: true });
-
-  if (SOURCE === 'fma') {
-    console.error('[fma] Full 100k spine path. Pinned dump:', FMA_DUMP.url);
-    console.error('[fma] ' + FMA_DUMP.note);
-    console.error('[fma] Not run in the verify slice — this downloads 342MB and parses tracks.csv.');
-    console.error('[fma] Wire-up lives in this file; invoke explicitly when you want the full file.');
-    process.exit(2);
-  }
 
   const seeds = SEEDS.slice(0, SEED_COUNT);
   console.error(`[mb] resolving ${seeds.length} seeds...`);
@@ -441,6 +565,9 @@ async function main() {
     await crawlArtist(r.mbid);
   }
 
+  if (SOURCE === 'fma') parseFmaInto();
+  pruneIntegrity();
+
   const master = {
     specVersion: 'music.master.v1',
     generatedAt: new Date().toISOString(),
@@ -454,6 +581,8 @@ async function main() {
           rights: 'Cover images are copyright their respective owners. Referenced by URL for display only — not redistributed.' },
         { id: 'wikipedia', name: 'Wikipedia', license: 'CC BY-SA 4.0', url: 'https://en.wikipedia.org',
           use: 'artist bios (text). Attribution + share-alike apply to the bio text only.' },
+        ...(SOURCE === 'fma' ? [{ id: 'freemusicarchive', name: 'Free Music Archive', license: 'CC BY 4.0 (metadata)', url: 'https://freemusicarchive.org',
+          use: 'bulk artists/albums/tracks/genres spine (the ~100k records); audio is per-track CC, metadata CC BY 4.0' }] : []),
       ],
       seeds: resolved,
       snapshot: { accessedAt: new Date().toISOString() },
@@ -480,7 +609,7 @@ async function main() {
 
   const broken = verifyMaster(master);
   const outPath = join(DATA_DIR, 'music-master.json');
-  writeFileSync(outPath, JSON.stringify(master, null, 2));
+  writeFileSync(outPath, JSON.stringify(master, null, SOURCE === 'fma' ? 0 : 2));
 
   const producerCredits = master.tracks.reduce((n, t) => n + t.credits.filter((c) => c.role === 'producer').length, 0);
   console.error('\n=== music-master.json ===');

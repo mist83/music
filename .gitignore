@@ -1,6 +1,6 @@
 # Raw upstream response cache — large, regenerable, not the deliverable.
 cache/
-build.log
+build*.log
 node_modules/
 
 # .NET build output

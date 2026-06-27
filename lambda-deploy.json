@@ -6,7 +6,7 @@
     "runtime": "dotnet8",
     "handler": "Music.Api",
     "architecture": "x86_64",
-    "memorySize": 1024,
+    "memorySize": 2048,
     "timeout": 30,
     "role": {
       "managed": {
