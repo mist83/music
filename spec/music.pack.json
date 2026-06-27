@@ -24,8 +24,7 @@
         { "key": "parentLabelId", "required": false, "fieldType": "Text", "aliases": ["parentLabelId", "parent"] }
       ],
       "rules": [
-        { "id": "music.labels.required",   "kind": "requiredFields", "severity": "Error",   "fields": ["id", "name"] },
-        { "id": "music.labels.parent_ref", "kind": "reference",      "severity": "Warning", "field": "parentLabelId", "targetCollection": "labels", "targetField": "id" }
+        { "id": "music.labels.required", "kind": "requiredFields", "severity": "Error", "fields": ["id", "name"] }
       ]
     },
     {
@@ -87,10 +86,9 @@
         { "key": "lengthMs",        "required": false, "fieldType": "Decimal", "aliases": ["lengthMs", "length", "duration"] }
       ],
       "rules": [
-        { "id": "music.tracks.required",       "kind": "requiredFields", "severity": "Error",   "fields": ["id", "title", "releaseId"] },
-        { "id": "music.tracks.release_ref",    "kind": "reference",      "severity": "Error",   "field": "releaseId", "targetCollection": "releases", "targetField": "id" },
-        { "id": "music.tracks.work_ref",       "kind": "reference",      "severity": "Warning", "field": "workId",    "targetCollection": "works",    "targetField": "id" },
-        { "id": "music.tracks.length_numeric", "kind": "numeric",        "severity": "Info",    "field": "lengthMs" }
+        { "id": "music.tracks.required",       "kind": "requiredFields", "severity": "Error", "fields": ["id", "title", "releaseId"] },
+        { "id": "music.tracks.release_ref",    "kind": "reference",      "severity": "Error", "field": "releaseId", "targetCollection": "releases", "targetField": "id" },
+        { "id": "music.tracks.length_numeric", "kind": "numeric",        "severity": "Info",  "field": "lengthMs" }
       ]
     }
   ]

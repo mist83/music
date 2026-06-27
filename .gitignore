@@ -3,6 +3,11 @@ cache/
 build.log
 node_modules/
 
+# .NET build output
+bin/
+obj/
+.vs/
+
 # Full-scale spine artifacts (the 100k FMA build) are too big for git.
 data/music-master.full.json
 data/fma_metadata.zip
