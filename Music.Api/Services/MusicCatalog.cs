@@ -106,7 +106,20 @@ public sealed class MusicCatalog
         if (!string.IsNullOrWhiteSpace(q.Role))
             return BuildRoleFeed(q, artistName, genreLabel);
 
-        var wantGenre = string.IsNullOrWhiteSpace(q.Genre) ? null : "genre:" + Slug(q.Genre);
+        // Resolve the genre filter by label across both MB (slug ids) and FMA (genre:fma-N ids).
+        HashSet<string>? wantGenreIds = null;
+        if (!string.IsNullOrWhiteSpace(q.Genre))
+        {
+            var needle = q.Genre.Trim();
+            var slugId = "genre:" + Slug(needle);
+            wantGenreIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var kv in genreLabel)
+                if (kv.Key.Equals(slugId, StringComparison.OrdinalIgnoreCase)
+                    || kv.Value.Equals(needle, StringComparison.OrdinalIgnoreCase)
+                    || kv.Value.Contains(needle, StringComparison.OrdinalIgnoreCase))
+                    wantGenreIds.Add(kv.Key);
+            if (wantGenreIds.Count == 0) wantGenreIds.Add(slugId);
+        }
         var entries = new List<FeedEntry>();
         foreach (var r in Each(Collection("releases")))
         {
@@ -120,9 +133,9 @@ public sealed class MusicCatalog
             var gids = StrArray(r, "genreIds");
             var lids = StrArray(r, "labelIds");
 
-            if (wantGenre != null
-                && !gids.Contains(wantGenre, StringComparer.OrdinalIgnoreCase)
-                && !(paId != null && artistGenres.TryGetValue(paId, out var ag) && ag.Contains(wantGenre, StringComparer.OrdinalIgnoreCase)))
+            if (wantGenreIds != null
+                && !gids.Any(g => wantGenreIds.Contains(g))
+                && !(paId != null && artistGenres.TryGetValue(paId, out var ag) && ag.Any(g => wantGenreIds.Contains(g))))
                 continue;
             if (!string.IsNullOrWhiteSpace(q.Decade) && !InDecade(year, q.Decade)) continue;
             if (!string.IsNullOrWhiteSpace(q.Type) && !string.Equals(type, q.Type, StringComparison.OrdinalIgnoreCase)) continue;
