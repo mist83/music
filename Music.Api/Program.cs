@@ -8,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 builder.Services.AddControllers();
-builder.Services.AddCors(o => o.AddDefaultPolicy(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
 {
@@ -23,7 +22,8 @@ builder.Services.AddSingleton(_ => MusicCatalog.Load(
     packsDir: ResolveDir("MUSIC_PACKS_PATH", "packs", Path.Combine("..", "spec"))));
 
 var app = builder.Build();
-app.UseCors();
+// CORS is owned by the Lambda Function URL config (lambda-deploy.json), not the app —
+// having both emits duplicate Access-Control-Allow-Origin headers, which browsers reject.
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
